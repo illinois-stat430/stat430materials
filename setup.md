@@ -72,19 +72,14 @@ For this class to run smoothly I ask that you create a directory (folder) named 
 
 ### Git and GitHub Tasks to Do
 
-1. Setup your individual student **repositories** if you have not yet done so. Repositories (**repos** for short) are essentially project folders where you intend to store a set of files that make sense being in the same location, much like a folder. Each student should click on this link https://edu.cs.illinois.edu/create-gh-repo/fa22_stat430 in order to create your student repo (you only need to do this once). This is how you setup your GitHub account as well. In your personal repo is where you will keep your assignment files. The idea is that:
-- you will work on your assignments from your repo, updating it often to ensure you're working on the correct file(s)
-- you will obtain course resources, including homework assignments, from my **stat430materials** course repo.
+1. Setup your individual student **repositories** if you have not yet done so. 
 
 2. Now that we have our personal repos, create a simple file called README.md that contains 1 line with:
 - your name
 - the course name
 - the following sentence: "This is probably the first file I have ever created in CS GitHub Enterprise." 
 
-Notice that you must describe the update that you are making. This action is called a **commit.** The commit is the message that you are leaving yourself to note what/why/how this file has been changed. Commits can be short (Git prefers this), but could be long. As you make future changes to this file or other files, you're going to want to commit for every change (or at least the noticeable changes).
-
 The md stands for Markdown, not the R Markdown that we will use later. This file that you've created is a Markdown file, and GitHub does some interesting rendering of this plain-text file. 
-
 
 Your repo has a very special address which you need to **clone** onto your local computer. Cloning the repo connects your GitHub repo to your local computer as a directory (with the same name as the repo). After we access Git via a terminal or shell, we will clone our repos. Make sure that you know which directory that you clone your repo in! I recommend creating a **STAT430** directory on your Desktop and then cloning your repo in this directory.
 
@@ -133,13 +128,12 @@ Now clone your personal repo into your **STAT430**  directory by following the s
 ```
 git clone git@github.com:stat430fa22/fa22_stat430_YourNetID.git
 ```
-illinois-stat430
 
 
 These commands establish the connection between GitHub (remote) and your computer (local). **You only need to clone your repos once, make sure that your repos are inside your STAT430 directory and are not nested within one another.** You can always delete either of these repos and reclone if you need to.
 
 
-7. Using the terminal or the shell,  
+7. (Optional) Using the terminal or the shell,  
 
 - Make your repo your current working directory using **cd**
 
@@ -170,7 +164,7 @@ echo "The second thing I've written but now in Git from the command-line" >> REA
 git status
 ```
 
-9. Using the shell: stage the change, commit it with a message, and push to your GitHub repo.
+9. Using the shell: stage the change, commit it with a message, and push to your GitHub repo. Notice that you must describe the update that you are making. This action is called a **commit.** The commit is the message that you are leaving yourself to note what/why/how this file has been changed. Commits can be short (Git prefers this), but could be long. As you make future changes to this file or other files, you're going to want to commit for every change (or at least the noticeable changes). The following three lines of code will stage, commit, and push contents from your local computer to your remote repository.
 ```
 git add -A
 git commit -m "Added new sentence from local computer"
@@ -183,7 +177,6 @@ git commit -m "Added new sentence from local computer"
 git push 
 ```
 Go online to view your changes.
-
 
 
 10. Using GitHub, verify the new change by refreshing the GitHub repo page.
