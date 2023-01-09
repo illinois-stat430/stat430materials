@@ -126,7 +126,7 @@ If you do get this error message, go to [this link](https://docs.github.com/arti
 Now clone your personal repo into your **STAT430**  directory by following the same steps that cloned my repo into this directory. You can do this by first changing *YourNetID.git* to your actual netid .git in the following and then coping the command into the terminal.
 
 ```
-git clone git@github.com:stat430fa22/fa22_stat430_YourNetID.git
+git clone git@github.com:illinois-stat430/sp23_stat430_YourNetID.git
 ```
 
 
