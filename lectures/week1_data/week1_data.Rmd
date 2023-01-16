@@ -1,0 +1,193 @@
+---
+title: "Introduction, course setup, and data sets"
+author: "Daniel J. Eck"
+date: ""
+output: beamer_presentation
+urlcolor: blue
+header-includes: 
+ - \usepackage{amsthm}
+ - \usepackage{amsmath}
+ - \usepackage{amsfonts}
+ - \usepackage{amscd}
+ - \usepackage{amssymb}
+ - \usepackage[sectionbib]{natbib}
+ - \usepackage{url}
+ - \usepackage{graphicx,times}
+ - \usepackage{array,fancyhdr,rotating}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Welcome
+
+Welcome to STAT 430: Baseball Analytics! 
+
+Let's have a fun semester exploring the ability of statistics to quantify winning games and evaluate players.
+
+
+## Background
+
+This lecture is meant to supplement Chapter 1 in your textbook and to go over course resources, course logistics, and the course schedule.
+
+
+
+
+
+## GitHub
+
+Course materials will be distributed from my GitHub organization which was built using CS's GitHub-repo-creator.
+
+See setup.md for details.
+
+
+## Software
+
+ - The R Project for Statistical Computing: \url{https://www.r-project.org/}
+
+ - RStudio as an integrated development environment for R: \url{https://www.rstudio.com/}
+
+
+## Data sets used in class
+
+- \texttt{Lahman} package: 
+```{r, eval = FALSE}
+install.packages("Lahman")
+```
+- [Retrosheet](www.retrosheet.org/gamelogs/index.html) data. Appendix A in your textbook provides an R script file for downloading and parsing all the game log files. A possible more convenient approach for obtaining retrosheets is included in this slide deck. Or you can occasionally use the \texttt{retrosheet} package for simple retrosheets:
+```{r, eval = FALSE}
+install.packages("retrosheet")
+```
+<!-- - PITCHf/x data in XML format.  Appendix B in your textbook details the \texttt{xml2} package and other resources for working with XML data in R.  -->
+- Statcast data obtained from the \texttt{baseballr} package: 
+```{r, eval = FALSE}
+install.packages("baseballr")
+```
+- [baseball_R](https://github.com/beanumber/baseball_R). Coding scripts and data sets that supplement your textbook.
+
+
+## 
+
+ - Data scraped from [baseball reference](https://www.baseball-reference.com/): 
+
+\tiny
+```{r, eval = FALSE}
+bwar_bat = readr::read_csv("https://www.baseball-reference.com/data/war_daily_bat.txt", 
+                           na = "NULL")
+bwar_pit = readr::read_csv("https://www.baseball-reference.com/data/war_daily_pitch.txt", 
+                           na = "NULL")
+```
+
+\normalsize
+ - [Era-adjusted data sets](https://arxiv.org/abs/2207.11332): Will be provided later.
+
+
+
+## More on Lahman
+
+We will also use CSV files that are obtained online:
+
+1. Access: \url{https://www.seanlahman.com/baseball-archive/statistics/}
+2. Below the *Download Latest Version* section, there is a selection for dowloading the most recent version of the database. Click on the *2021 – comma-delimited version [Baseball Databank]* version
+3. Save the file to a directory of your choice.
+4. Extract the contents of the downloaded zip file
+
+
+## Lahman Data in R
+
+The \texttt{Lahman} package contains several tables consisting of useful stat. We highlight a few tables below
+
+\vspace{12pt}
+
+\tiny
+```{r}
+library(Lahman)
+data(Batting)
+data(Pitching)
+data(Fielding)
+data(Teams)
+```
+
+
+## Lahman Batting table
+
+\tiny
+```{r}
+head(Batting)
+```
+
+
+## Lahman Pitching table
+
+\tiny
+```{r}
+head(Pitching)
+```
+
+
+## Lahman Fielding table
+
+\tiny
+```{r}
+head(Fielding)
+```
+
+
+## Lahman Teams table
+
+\tiny
+```{r}
+head(Teams, 3)
+```
+
+
+## Retrosheets
+
+There is a lot of box score information contained in a retrosheet. 
+
+
+Basic retrosheets can be obtained from the \texttt{retrosheet} package (the following code chunk has \texttt{eval = FALSE} because the retrosheet will not fit on a single slide).
+
+\vspace{12pt}
+
+\tiny
+```{r, eval = FALSE}
+library(retrosheet)
+getRetrosheet(type = "game", year = 2012)
+```
+
+
+##
+
+More comprehensive retrosheets can be obtained from the \texttt{baseballr} package (the following code chunk has \texttt{eval = FALSE} because the retrosheet will take awhile to load and will be stored locally).
+
+\vspace{12pt}
+
+\tiny
+```{r, eval = FALSE}
+library(baseballr)
+retrosheet_data(path_to_directory = "~/Desktop/baseball_course/retrosheet", 
+                years_to_acquire = 1998)
+```
+
+
+\normalsize
+Obtaining retrosheets via \texttt{baseballr} requires some work outlined by Bill Petti [here](https://billpetti.github.io/2019-08-10-build-retrosheet-event-roster-database-rstats-baseballr/). 
+
+The steps in the hyperlink above require one to first download and install files from [the Chadwick Bureau](https://github.com/chadwickbureau/chadwick/releases).
+
+Follow the instructions in the INSTALL file in the downloaded Chadwick tarball (this course used \texttt{chadwick-0.9.5}).
+
+
+## Statcast
+
+A Statcast scraper [script](https://billpetti.github.io/2021-04-02-build-statcast-database-rstats-version-3.0/) is in the **stat430resources** repo.
+
+This scraper requires the user to first load in \texttt{tidyverse} and \texttt{baseballr}.
+
+We will use this data later in the course.
+
+
+
+
