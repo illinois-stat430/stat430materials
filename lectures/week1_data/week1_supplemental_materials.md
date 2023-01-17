@@ -172,9 +172,9 @@ All of the R output in these notes are generated from code chunks of the form
 R code
 ```
 ````
-where the brackets {} specify code chunk options. In the above, **r** indicates that the code chunk should access R and then return the output given by **R code**. Here **chunk_name** is the name given to the code chunk. Naming conde chunks is helpful for debugging and internal referencing.
+where the brackets {} specify code chunk options. In the above, **r** indicates that the code chunk should access R and then return the output given by **R code**. Here **chunk_name** is the name given to the code chunk. Naming code chunks is helpful for debugging and internal referencing.
 
-Some common code chunk specifications ar eincluded below:
+Some common code chunk specifications are included below:
 
 - The **echo** argument specifies whether or not the code should be displayed. The default value is set to **echo = TRUE**, you can set **echo = FALSE** to hide R code.
 
