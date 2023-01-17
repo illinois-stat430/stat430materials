@@ -60,7 +60,7 @@ lectures/week1_data
 	
 **Course location:** 2078 Natural History Building
 
-**Office hours**: 12:00PM - 1:00PM on Wednesdays (Zoom link: https://illinois.zoom.us/j/82646322420?pwd=TURMWG1HVU1ab3grOHI3aUhJZVkxQT09)
+**Office hours**: 12pm - 1pm on Wednesdays (Zoom link: https://illinois.zoom.us/j/82646322420?pwd=TURMWG1HVU1ab3grOHI3aUhJZVkxQT09)
 
 **TA**: Shen Yan (shenyan3@illinois.edu)
 
