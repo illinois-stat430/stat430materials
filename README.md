@@ -64,7 +64,7 @@ lectures/week1_data
 
 **TA**: Shen Yan (shenyan3@illinois.edu)
 
-**TA Office hours**: TBA
+**TA Office hours**: 1pm - 3pm on Fridays (Zoom link: https://illinois.zoom.us/j/6544597856?pwd=enp4SmNUVjJEelFsazZjRjhFSHFpQT09)
 
 **Course website**: https://github.com/illinois-stat430/stat430materials
 
@@ -141,7 +141,7 @@ You have many options to get help for this class:
 
 | category | notes | points
 | :-- | :---- | :---- |
-| Attendance | 10 points each course; two free misses  | 130 points
+| Attendance | 5 points each course; four free misses  | 130 points
 | Labs | 100 points each | 500 points
 | Final Project | 50 points for approved project; 70 points for presentation (recorded summary); 250 for project materials and writeup | 370 points
 | total | | 1000 points
