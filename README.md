@@ -58,11 +58,13 @@ lectures/week1_data
 
 **Course time:** Tuesdays and Thursdays from 11am - 12:20pm
 	
-**Course location:** TBD
+**Course location:** 2078 Natural History Building
 
-**Office hours**: TBD
+**Office hours**: 12:00PM - 1:00PM on Wednesdays (Zoom link: https://illinois.zoom.us/j/82646322420?pwd=TURMWG1HVU1ab3grOHI3aUhJZVkxQT09)
 
-**TA**: TBD
+**TA**: Shen Yan (shenyan3@illinois.edu)
+
+**TA Office hours**: TBA
 
 **Course website**: https://github.com/illinois-stat430/stat430materials
 
