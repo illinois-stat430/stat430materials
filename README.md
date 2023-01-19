@@ -3,7 +3,7 @@
 
 The **stat430materials** GitHub repository contains all information about our STAT 430 course.
 
-See the lectures directory for course notes. See the labs directory for lab assignments.
+See the lectures directory for course notes and slides. See the labs directory for lab assignments.
 
 
 # News
