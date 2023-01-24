@@ -81,11 +81,11 @@ head(Teams, 3)
 \tiny
 ```{r}
 Teams %>% 
-	select(yearID, franchID, W, L, AB, H, X2B, X3B, HR, BB, HBP, SF, 
+	select(yearID, franchID, W, L, G, AB, H, X2B, X3B, HR, BB, HBP, SF, 
 				 HA, HRA, BBA, SOA, IPouts, FP, R, RA) %>% 
 	filter(yearID >= 1900) %>%
 	replace_na(list(HBP = 0, SF = 0)) %>% 
-	mutate(RD = (R - RA) / (W + L), X1B = H - (X2B + X3B + HR)) %>% 
+	mutate(RD = (R - RA) / G, X1B = H - (X2B + X3B + HR)) %>% 
 	arrange(desc(RD)) %>% 
 	head(10)
 ```
@@ -97,11 +97,11 @@ Teams %>%
 \tiny
 ```{r}
 dat <- Teams %>% 
-	select(yearID, franchID, W, L, AB, H, X2B, X3B, HR, BB, HBP, SF, 
+	select(yearID, franchID, W, L, G, AB, H, X2B, X3B, HR, BB, HBP, SF, 
 				 HA, HRA, BBA, SOA, IPouts, FP, R, RA) %>% 
 	filter(yearID >= 1900) %>%
 	replace_na(list(HBP = 0, SF = 0)) %>% 
-	mutate(RD = (R - RA) / (W + L), X1B = H - (X2B + X3B + HR)) %>% 
+	mutate(RD = (R - RA) / G, X1B = H - (X2B + X3B + HR)) %>% 
 	mutate(OBP = (H + BB + HBP)/(AB + BB + HBP + SF)) %>%  
 	mutate(SLG = (X1B + 2*X2B + 3*X3B + 4*HR)/AB) %>% 
 	mutate(OPS = OBP + SLG) %>% 
@@ -126,7 +126,7 @@ dat <- Teams %>%
 				 HA, HRA, BBA, SOA, IPouts, FP, R, RA) %>% 
 	filter(yearID >= 1900) %>%
 	replace_na(list(HBP = 0, SF = 0)) %>% 
-	mutate(RD = (R - RA) / (W + L), X1B = H - (X2B + X3B + HR)) %>% 
+	mutate(RD = (R - RA) / G, X1B = H - (X2B + X3B + HR)) %>% 
 	mutate(OBP = (H + BB + HBP)/(AB + BB + HBP + SF)) %>%  
 	mutate(SLG = (X1B + 2*X2B + 3*X3B + 4*HR)/AB) %>% 
 	mutate(OPS = OBP + SLG) %>% 
