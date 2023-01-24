@@ -122,7 +122,7 @@ In the event that you have both \texttt{dplyr} and \texttt{MASS} loaded in an R 
 \tiny
 ```{r}
 dat <- Teams %>% 
-	dplyr::select(yearID, franchID, W, L, AB, H, X2B, X3B, HR, BB, HBP, SF, 
+	dplyr::select(yearID, franchID, W, L, G, AB, H, X2B, X3B, HR, BB, HBP, SF, 
 				 HA, HRA, BBA, SOA, IPouts, FP, R, RA) %>% 
 	filter(yearID >= 1900) %>%
 	replace_na(list(HBP = 0, SF = 0)) %>% 
