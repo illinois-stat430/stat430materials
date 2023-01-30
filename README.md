@@ -288,18 +288,18 @@ A list of the designated University employees who, as counselors, confidential a
   + **Reading**: CH 1 and 2 in Analyzing Baseball Data with R (data sets and data wrangling)
   + **Reading**: [A Statistical Look at Roger Clemens’ Pitching Career](https://repository.upenn.edu/cgi/viewcontent.cgi?article=1044&context=statistics_papers)
   
-* Week 3 [01/31 (lab), 02/02 (lab)]
+* Week 3 [01/31 (lecture), 02/02 (lab)]
+  + **Reading**: course slides
   + **Reading**: CH 3 in Analyzing Baseball Data with R (common visualization)
+  + **Reading**: CH 4: The Relation Between Runs and Wins in Analyzing Baseball Data with R
   + **Lab** 1 due on 02/03 at 11:59 pm
   + **Lab 2** assigned this week, due on 02/17 at 11:59 pm
 
 * Week 4 [02/07 (lecture), 02/09 (lab)]
   + **Reading**: course slides
-  + **Reading**: CH 4: The Relation Between Runs and Wins in Analyzing Baseball Data with R
-
-* Week 5 [02/14 (speaker), 02/16 (lecture)]
-  + **Reading**: course slides
   + **Reading**: CH 5: Value of Plays Using Run Expectancy in Analyzing Baseball Data with R
+
+* Week 5 [02/14 (speaker), 02/16 (lab)]
   + **Lab 2** due on 02/17 at 11:59 pm
   + **Lab 3** assigned this week, due on 03/10 at 11:59 pm
   + **Speaker**: Jim Albert on Tuesday, February 14th at 11 am.
@@ -309,17 +309,16 @@ A list of the designated University employees who, as counselors, confidential a
   + **Reading**: CH 9: Simulation in Analyzing Baseball Data with R 
   + **Speaker**: Alan Nathan on Thursday, February 23rd at 11 am.
   
-* Week 7 [02/28 (lab), 03/02 (lab)]
-
-  
-* Week 8 [03/07 (lecture), 03/09 (lab)]
+* Week 7 [02/28 (lecture), 03/02 (lab)]
   + **Reading**: course slides
   + **Reading**: CH 12: Batted Ball Data from Statcast in Analyzing Baseball Data with R
+  
+* Week 8 [03/07 (lab), 03/09 (lab)]
   + **Lab 3** due on 03/10 at 11:59 pm
   + **Lab 4** assigned this week, due on 03/31 at 11:59 pm
 
 * Week 9 [03/14, 03/16]  
-  +**Spring Break**
+  + **Spring Break**
   
 * Week 10 [03/21 (lab), 03/23 (speaker)]
   + **Reading**: course slides
