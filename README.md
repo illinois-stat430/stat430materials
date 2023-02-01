@@ -292,7 +292,7 @@ A list of the designated University employees who, as counselors, confidential a
   + **Reading**: course slides
   + **Reading**: CH 3 in Analyzing Baseball Data with R (common visualization)
   + **Reading**: CH 4: The Relation Between Runs and Wins in Analyzing Baseball Data with R
-  + **Lab** 1 due on 02/03 at 11:59 pm
+  + **Lab 1** due on 02/03 at 11:59 pm
   + **Lab 2** assigned this week, due on 02/17 at 11:59 pm
 
 * Week 4 [02/07 (lecture), 02/09 (lab)]
