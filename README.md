@@ -334,10 +334,11 @@ A list of the designated University employees who, as counselors, confidential a
   + **Reading**: Introduction to R Shiny
   + **Speaker**: Ehsan Bokhari on Thursday, April 6th at 11 am
 
-* Week 13 [04/11 (lecture), 04/13 (lab)]
+* Week 13 [04/11 (lecture), 04/13 (speaker)]
   + **Reading**: course slides
   + **Reading**: SEAM Method
   + **Reading**: [Enhancing strategic defensive positioning and performance in the outfield](https://link.springer.com/article/10.1007/s10109-021-00367-1)
+  + **Speaker**: Charlie Young on Thursday, April 13th at 11 am.
   + **Lab 5** due on 04/14 at 11:59 pm  
   + Project proposal assigned this week, due on 04/21 at 11:59 pm
   
