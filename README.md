@@ -8,7 +8,7 @@ See the lectures directory for course notes and slides. See the labs directory f
 
 # News
 
- - We will go over run expectancy in week 4.
+ - Slides from Jim Albert's talk are now posted.
 
  - I have added a document that goes over the submission workflow, GitHub, R markdown code chunks, and terminal commands in detail. This document is called week1_supplemental_materials.md and it is available to you in 
 
