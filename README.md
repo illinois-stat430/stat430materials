@@ -313,7 +313,7 @@ A list of the designated University employees who, as counselors, confidential a
   + **Reading**: CH 9: Simulation in Analyzing Baseball Data with R 
   + **Speaker**: Alan Nathan on Thursday, February 23rd at 11 am.
   
-* Week 7 [02/28 (lecture), 03/02 (lab)]
+* Week 7 [02/28 (lab), 03/02 (lecture)]
   + **Reading**: course slides
   + **Reading**: CH 12: Batted Ball Data from Statcast in Analyzing Baseball Data with R
   
