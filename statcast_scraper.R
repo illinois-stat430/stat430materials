@@ -3,6 +3,7 @@
 
 ####### Beta software by David Dalpiaz ############
 
+library(devtools)
 devtools::install_github("daviddalpiaz/bbd")
 ws_2021 = bbd::statcast(start = "2021-10-26", end = "2021-11-02", process = TRUE, names = TRUE)
 
@@ -14,30 +15,52 @@ mlb_1998 = bbd::statcast(
 	verbose = TRUE
 )
 
-## scrape data in parallel 
-mat <- rbind(c("2017-03-01","2017-11-02"),
-             c("2018-03-01","2018-11-02"),
-             c("2019-03-01","2019-11-02"),
-             c("2021-03-01","2021-11-02"))
+
+#### STATCAST SCRAPERS ####
 
 ## works on Mac/Linux
-library(parallel)
 
-system.time({
-  statcast <- do.call(rbind, mclapply(1:4, mc.cores = 4, FUN = function(j){
-    bbd::statcast(start = mat[j,1], end = mat[j,2], process = TRUE, names = TRUE)
-  }))
-})
+## some code from David Dalpiaz
+mat = rbind(
+  c("2017-03-01", "2017-12-01"),
+  c("2018-03-01", "2018-12-01"),
+  c("2019-03-01", "2019-12-01"),
+  c("2021-03-01", "2021-12-01"),
+  c("2022-03-01", "2022-12-01")
+)
 
-## works on PC
+helper = function(j) {
+  bbd::statcast(
+    start = mat[j, 1],
+    end = mat[j, 2],
+    process = TRUE,
+    names = TRUE,
+    verbose = TRUE
+  )
+}
+
+library(future.apply)
+plan(multisession) ## Run in parallel on local computer, mostly automagic
+
+results = do.call(rbind, future_lapply(
+  X = 1:5,
+  FUN = helper
+))
+
+nrow(results)
+
+write_csv(results, file = "~/Desktop/STAT430/statcast.csv")
+
+
+## works on PC (should also work on Mac/Linux)
 library(parallel)
 library(foreach) 
 library(doParallel) 
-cl <- makeCluster(4)
+cl <- makeCluster(5)
 registerDoParallel(cl)
 
 system.time({
-  statcast <- foreach(j=1:4,.combine=rbind) %dopar% {
+  statcast <- foreach(j=1:5,.combine=rbind) %dopar% {
     bbd::statcast(start = mat[j,1], end = mat[j,2], process = TRUE, names = TRUE)
   }
 })
