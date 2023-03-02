@@ -1,0 +1,379 @@
+---
+title: "Statcast data for batters"
+author: "Daniel J. Eck"
+date: ""
+output: beamer_presentation
+urlcolor: blue
+header-includes: 
+ - \usepackage{amsthm}
+ - \usepackage{amsmath}
+ - \usepackage{amsfonts}
+ - \usepackage{amscd}
+ - \usepackage{amssymb}
+ - \usepackage[sectionbib]{natbib}
+ - \usepackage{url}
+ - \usepackage{graphicx,times}
+ - \usepackage{array,fancyhdr,rotating}
+---
+
+
+## Background
+
+This lecture is meant to supplement Chapter 12 in your textbook.
+
+
+
+## Obtaining Statcast data
+
+Can use the \texttt{scrape\_statcast\_savant} function in the \texttt{baseballr} parckage for up to 40000 observations.
+
+For the entire dataset:
+
+ - Open the \texttt{statcast\_scraper.R} file in RStudio. 
+
+ - Scrape Statcast data using either David Dalpiaz's beta \texttt{bbd} package or Bill Petti's functions. The later require the \texttt{baseballr} package.
+
+ - Store Statcast data locally once you have scraped this data. You do not want to scrape this data more than once!
+
+
+
+## 
+
+We download Statcast data for Juan Soto (Statcast id \texttt{665742}) over the second half of the 2021 season.
+
+\vspace*{12pt}
+
+\tiny
+```{r, message=FALSE}
+library(tidyverse)
+library(baseballr)
+```
+
+```{r soto, cache = TRUE}
+system.time({soto <- scrape_statcast_savant(start_date = "2021-07-12", 
+                                 end_date = "2021-10-31", 
+                                 playerid = 665742, 
+                                 player_type = "batter")})
+```
+
+
+
+## Spray chart
+
+The locations of batted ball data are encoded in \texttt{hc\_x} and \texttt{hc\_y}.
+
+\vspace{12pt}
+
+\tiny
+```{r, message = FALSE}
+soto %>% select(events, hc_x, hc_y) %>% head()
+```
+
+
+\normalsize 
+Obviously, these data are only available for batted balls. The \texttt{type} variable only takes the value \texttt{X} in such cases.
+
+\vspace{12pt}
+
+\tiny
+```{r, message = FALSE}
+soto_bip <- soto %>% filter(type == "X")
+soto_bip %>% select(events, hc_x, hc_y) %>% head()
+```
+
+
+
+## 
+
+From these coordinates, we can construct a simple spray chart.
+
+\vspace{12pt}
+
+\tiny
+```{r}
+spray_chart <- function(...){
+	ggplot(...) + geom_curve(x=33, xend=223, y =-100, yend =-100, curvature =-0.65) + 
+		geom_segment(x=128, xend=33, y=-208, yend=-100) + 
+		geom_segment(x=128, xend=223, y=-208, yend=-100) + 
+		geom_curve(x=83, xend=173, y=-155, yend=-156, 
+							 curvature=-0.65, linetype="dotted") + 
+		coord_fixed() + 
+		scale_x_continuous(NULL, limits = c(25,225)) + 
+		scale_y_continuous(NULL, limits = c(-225,-25))
+}
+```
+
+
+
+## 
+
+\tiny
+```{r, message=FALSE, warning = FALSE}
+spray_chart(soto_bip, aes(x=hc_x, y=-hc_y, color=events)) + 
+	geom_point()
+```
+
+
+## Balls in play data (2017-2021)
+
+We load in a subset of the statcast data since the full data is too large to compile. 
+
+Follow the steps below to obtain a manageable subset of the statcast data containing 
+just balls in play: 
+
+1. Scrape statcast data locally. You can use functions in the statcast\_scraper.R file.
+2. Follow the steps in the statcast\_supplement.R file to get balls in play data.
+3. Load the data in R markdown using the code below (remember to set cache = TRUE).
+
+\vspace{12pt}
+
+\tiny
+```{r loaddata, message = FALSE, cache = TRUE}
+sc_bip_small <- read_csv(file = "~/Desktop/STAT430/sc_bip_small.csv")
+```
+
+
+##
+
+\tiny
+```{r}
+head(sc_bip_small)
+colnames(sc_bip_small)
+```
+
+
+## Plot estimated BA as a function of LA and EV 
+
+\tiny
+```{r BAplot, message = FALSE, cache = TRUE}
+guidelines <- tibble(
+	launch_angle = c(10, 25, 40), 
+	launch_speed = 40,
+	labels = c("Ground balls", "Line drives", "Flyballs")
+)
+
+ev_plot <-  
+	ggplot(sc_bip_small, aes(x = launch_speed, y = launch_angle, 
+						 color = estimated_ba_using_speedangle)) + 
+	geom_hline(data = guidelines, aes(yintercept = launch_angle), 
+						 color = "black", linetype = 2) + 
+	geom_text(data = guidelines, aes(label = labels, y = launch_angle - 4), 
+						color = "black", hjust = "left") + 
+ 	geom_point(alpha = 0.05) + 	
+	scale_color_gradient("BA", low = "blue", high = "white") + 
+ 	theme_minimal() + 
+	scale_x_continuous("Exit velocity (mph)", limits = c(40,120)) + 
+	scale_y_continuous("Launch angle (degrees)", limits = c(-75,75, 25))
+```
+
+
+##
+
+```{r BAplot2, message = FALSE, warning = FALSE, cache = TRUE}
+ev_plot
+```
+
+
+
+## Modeling home run probabilities
+
+We are going to model home run probabilities using generalized additive models (GAM). Fitting will be done using the \texttt{gam} function in the \texttt{mgcv} package.
+
+\vspace{12pt}
+
+\tiny
+```{r, message=FALSE}
+library(mgcv)
+sc_bip_small <- sc_bip_small %>% mutate(HR = ifelse(events == "home_run",1,0))
+```
+
+\normalsize
+We will fit a GAM model for home run probabilities as a function of launch speed and launch angle. We fit this model to the full balls in play data set. This is slow, your book fits the model using a fraction of the data.
+
+\vspace{12pt}
+
+\tiny
+```{r gamfit, cache=TRUE}
+system.time(fit <- sc_bip_small %>% gam(HR ~ s(launch_speed, launch_angle), 
+														family = binomial, data = .))
+```
+
+
+
+## Background on our GAM
+
+GAMs are flexible models to be used when the functional form of the relationship between the predictors and the response variable is not known.
+
+Our GAM model models the probability of hitting a home run as a function of LA and EV,
+$$
+ P(HR = 1) = \frac{\exp(s(LA,EV))}{1 + \exp(s(LA,EV))}
+$$
+where $s(\cdot,\cdot)$ denotes an arbitrary smooth function of two variables. This is called a logistic model, as the logit of HR probability is expressed as a smooth function of the predictors,
+$$
+  \log\left(\frac{P(HR = 1)}{1 - P(HR = 1)}\right) = s(LA, EV)
+$$
+
+
+## 
+
+Let's now plot our GAM's estimates of HR probability over a suitable range of LA and EV values.
+
+\tiny
+```{r, eval = FALSE}
+ls_la_grid <- expand.grid(launch_speed = seq(90, 115, length.out = 50), 
+  launch_angle = seq(15, 45, length.out = 50))
+
+library(broom)
+hats <- fit %>% augment(type.predict = "response", newdata = ls_la_grid)
+odd_values <- seq(from = 0.1, to = 0.9, by = 0.2)
+
+hat_labels <- hats %>% 
+	filter(round(launch_angle) == 30) %>% 
+	group_by(hr_prob = round(.fitted, 1)) %>% 
+	summarise(N = n(), launch_speed = mean(launch_speed) + 1, 
+						launch_angle = mean(launch_angle)) %>% 
+	filter(as.character(hr_prob) %in% odd_values)
+
+ggplot(hats, aes(x = launch_speed, y = launch_angle)) + 
+	geom_tile(aes(fill = .fitted)) + 
+	geom_contour(aes(z = .fitted), breaks = odd_values) + 
+	geom_text(data = hat_labels, aes(label = hr_prob)) + 
+	xlab("Exit velocity (mph)") + 
+	ylab("Launch angle (degrees)") + 
+	scale_fill_gradient("HR prob", low = "blue", high = "white")
+```
+
+
+##
+
+```{r, echo = FALSE}
+ls_la_grid <- expand.grid(launch_speed = seq(90, 115, length.out = 50), 
+													launch_angle = seq(15, 45, length.out = 50))
+
+library(broom)
+hats <- fit %>% augment(type.predict = "response", newdata = ls_la_grid)
+odd_values <- seq(from = 0.1, to = 0.9, by = 0.2)
+
+hat_labels <- hats %>% 
+	filter(round(launch_angle) == 30) %>% 
+	group_by(hr_prob = round(.fitted, 1)) %>% 
+	summarise(N = n(), launch_speed = mean(launch_speed) + 1, 
+						launch_angle = mean(launch_angle)) %>% 
+	filter(as.character(hr_prob) %in% odd_values)
+
+ggplot(hats, aes(x = launch_speed, y = launch_angle)) + 
+	geom_tile(aes(fill = .fitted)) + 
+	geom_contour(aes(z = .fitted), breaks = odd_values) + 
+	geom_text(data = hat_labels, aes(label = hr_prob)) + 
+	xlab("Exit velocity (mph)") + 
+	ylab("Launch angle (degrees)") + 
+	scale_fill_gradient("HR prob", low = "blue", high = "white")
+```
+
+
+
+## Are launch angles skills?
+
+We will investigate the distribution of launch angles across player year combinations. We will investigate consistency of launch angles and whether certain players have consistently higher or lower launch angles.
+
+\vspace{12pt}
+
+\tiny
+```{r, message=FALSE}
+library(lubridate)
+regulars <- sc_bip_small %>% 
+	mutate(year = year(game_date)) %>% 
+	group_by(batter_name, year) %>% 
+	summarise(N = n(), 
+						avg_la = mean(launch_angle, na.rm = TRUE), 
+						var_la = var(launch_angle, na.rm = TRUE)) %>% 
+	filter(N >= 300)
+```
+
+
+
+##
+
+\tiny
+```{r}
+regulars %>% arrange(desc(avg_la)) %>% head(10)
+regulars %>% arrange(avg_la) %>% head(10)
+```
+
+
+##
+
+\tiny
+```{r}
+regulars %>% arrange(desc(var_la)) %>% head(10)
+regulars %>% arrange(var_la) %>% head(10)
+```
+
+
+
+##
+
+We now plot launch angle densities for every player year combination.
+
+\tiny
+```{r la_plot, cache = TRUE}
+sc_bip_small <- sc_bip_small %>% mutate(year = year(game_date))
+sc_regulars <- sc_bip_small %>% 
+	filter(!is.na(launch_angle)) %>% 
+	inner_join(regulars, by = c("batter_name","year"))
+
+sc_regulars <- regulars %>% 
+	inner_join(sc_bip_small %>% filter(!is.na(launch_angle)), 
+						 by = c("batter_name","year")) %>% 
+	filter(!batter %in% c(547982, 649557, 628451, 650490))
+
+la_plot <- ggplot(sc_regulars, 
+  aes(x = launch_angle, group = batter)) + 
+	geom_density(size = 0.1, color = "darkgray") + 
+	scale_x_continuous("Launch Angle (degrees)") + 
+	facet_wrap(~year)
+```
+
+
+
+##
+
+Most batters have a similar distribution of launch angle, but there is variation across batters. The presence of multiple modes is interesting.
+
+\vspace{12pt}
+
+\tiny
+```{r, out.height="7cm", out.width="7cm"}
+la_plot
+```
+
+
+
+## 
+
+Annual correlations of launch angles are pretty high. 
+
+\vspace{12pt}
+
+\tiny
+```{r, message = FALSE}
+sc_split_wide <- sc_regulars %>% mutate(split = year) %>% 
+	group_by(year, batter_name) %>% 
+	summarise(avg_la = mean(launch_angle, na.rm = TRUE)) %>% 
+	spread(key = year, value = avg_la)
+
+## correlation matrix for full-time batters through 2017-2021
+cor(sc_split_wide %>% select(`2017`,`2018`,`2019`,`2021`) %>% filter(complete.cases(.)))
+
+## correlation matrix for full-time batters through 2017-2018
+cor(sc_split_wide %>% select(`2017`,`2018`) %>% filter(complete.cases(.)))[1,2]
+
+## correlation matrix for full-time batters through 2018-2019
+cor(sc_split_wide %>% select(`2018`,`2019`) %>% filter(complete.cases(.)))[1,2]
+
+## correlation matrix for full-time batters through 2019-2021
+cor(sc_split_wide %>% select(`2019`,`2021`) %>% filter(complete.cases(.)))[1,2]
+```
+
+
+
